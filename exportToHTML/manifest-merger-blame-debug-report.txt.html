@@ -1,0 +1,184 @@
+<html>
+<head>
+<title>manifest-merger-blame-debug-report.txt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #bcbec4;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+manifest-merger-blame-debug-report.txt</font>
+</center></td></tr></table>
+<pre><span class="s0">1&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="s0">2&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span>
+<span class="s0">3    package=&quot;com.example.caltrack&quot;</span>
+<span class="s0">4    android:versionCode=&quot;1&quot;</span>
+<span class="s0">5    android:versionName=&quot;1.0&quot; &gt;</span>
+<span class="s0">6</span>
+<span class="s0">7    &lt;uses-sdk</span>
+<span class="s0">7--&gt;INJECTED</span>
+<span class="s0">8        android:minSdkVersion=&quot;37&quot;</span>
+<span class="s0">8--&gt;INJECTED</span>
+<span class="s0">9        android:targetSdkVersion=&quot;37&quot; /&gt;</span>
+<span class="s0">9--&gt;INJECTED</span>
+<span class="s0">10</span>
+<span class="s0">11    &lt;permission</span>
+<span class="s0">11--&gt;[androidx.core:core:1.19.0] /Users/wreck/.gradle/caches/9.4.1/transforms/53affd82f226a511e8a5381ccbb1c305/transformed/core-1.19.0/AndroidManifest.xml:22:5-24:47</span>
+<span class="s0">12        android:name=&quot;com.example.caltrack.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION&quot;</span>
+<span class="s0">12--&gt;[androidx.core:core:1.19.0] /Users/wreck/.gradle/caches/9.4.1/transforms/53affd82f226a511e8a5381ccbb1c305/transformed/core-1.19.0/AndroidManifest.xml:23:9-81</span>
+<span class="s0">13        android:protectionLevel=&quot;signature&quot; /&gt;</span>
+<span class="s0">13--&gt;[androidx.core:core:1.19.0] /Users/wreck/.gradle/caches/9.4.1/transforms/53affd82f226a511e8a5381ccbb1c305/transformed/core-1.19.0/AndroidManifest.xml:24:9-44</span>
+<span class="s0">14</span>
+<span class="s0">15    &lt;uses-permission android:name=&quot;com.example.caltrack.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION&quot; /&gt;</span>
+<span class="s0">15--&gt;[androidx.core:core:1.19.0] /Users/wreck/.gradle/caches/9.4.1/transforms/53affd82f226a511e8a5381ccbb1c305/transformed/core-1.19.0/AndroidManifest.xml:26:5-97</span>
+<span class="s0">15--&gt;[androidx.core:core:1.19.0] /Users/wreck/.gradle/caches/9.4.1/transforms/53affd82f226a511e8a5381ccbb1c305/transformed/core-1.19.0/AndroidManifest.xml:26:22-94</span>
+<span class="s0">16</span>
+<span class="s0">17    &lt;application</span>
+<span class="s0">17--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:5:5-26:19</span>
+<span class="s0">18        android:allowBackup=&quot;true&quot;</span>
+<span class="s0">18--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:6:9-35</span>
+<span class="s0">19        android:appComponentFactory=&quot;androidx.core.app.CoreComponentFactory&quot;</span>
+<span class="s0">19--&gt;[androidx.core:core:1.19.0] /Users/wreck/.gradle/caches/9.4.1/transforms/53affd82f226a511e8a5381ccbb1c305/transformed/core-1.19.0/AndroidManifest.xml:28:18-86</span>
+<span class="s0">20        android:dataExtractionRules=&quot;@xml/data_extraction_rules&quot;</span>
+<span class="s0">20--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:7:9-65</span>
+<span class="s0">21        android:debuggable=&quot;true&quot;</span>
+<span class="s0">22        android:extractNativeLibs=&quot;false&quot;</span>
+<span class="s0">22--&gt;INJECTED</span>
+<span class="s0">23        android:fullBackupContent=&quot;@xml/backup_rules&quot;</span>
+<span class="s0">23--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:8:9-54</span>
+<span class="s0">24        android:icon=&quot;@mipmap/ic_launcher&quot;</span>
+<span class="s0">24--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:9:9-43</span>
+<span class="s0">25        android:label=&quot;@string/app_name&quot;</span>
+<span class="s0">25--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:10:9-41</span>
+<span class="s0">26        android:roundIcon=&quot;@mipmap/ic_launcher_round&quot;</span>
+<span class="s0">26--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:11:9-54</span>
+<span class="s0">27        android:supportsRtl=&quot;true&quot;</span>
+<span class="s0">27--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:12:9-35</span>
+<span class="s0">28        android:testOnly=&quot;true&quot;</span>
+<span class="s0">29        android:theme=&quot;@style/Theme.CalTrack&quot; &gt;</span>
+<span class="s0">29--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:13:9-46</span>
+<span class="s0">30        &lt;activity</span>
+<span class="s0">30--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:14:9-25:20</span>
+<span class="s0">31            android:name=&quot;com.example.caltrack.MainActivity&quot;</span>
+<span class="s0">31--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:15:13-41</span>
+<span class="s0">32            android:exported=&quot;true&quot;</span>
+<span class="s0">32--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:16:13-36</span>
+<span class="s0">33            android:label=&quot;@string/app_name&quot;</span>
+<span class="s0">33--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:17:13-45</span>
+<span class="s0">34            android:theme=&quot;@style/Theme.CalTrack&quot;</span>
+<span class="s0">34--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:18:13-50</span>
+<span class="s0">35            android:windowSoftInputMode=&quot;adjustResize&quot; &gt;</span>
+<span class="s0">35--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:19:13-55</span>
+<span class="s0">36            &lt;intent-filter&gt;</span>
+<span class="s0">36--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:20:13-24:29</span>
+<span class="s0">37                &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;</span>
+<span class="s0">37--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:21:17-69</span>
+<span class="s0">37--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:21:25-66</span>
+<span class="s0">38</span>
+<span class="s0">39                &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;</span>
+<span class="s0">39--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:23:17-77</span>
+<span class="s0">39--&gt;/Users/wreck/Downloads/CalTrack-main/app/src/main/AndroidManifest.xml:23:27-74</span>
+<span class="s0">40            &lt;/intent-filter&gt;</span>
+<span class="s0">41        &lt;/activity&gt;</span>
+<span class="s0">42        &lt;activity</span>
+<span class="s0">42--&gt;[androidx.compose.ui:ui-tooling-android:1.10.4] /Users/wreck/.gradle/caches/9.4.1/transforms/019bc0ad6d1e1d4fa9b9f858b737c7f8/transformed/ui-tooling/AndroidManifest.xml:23:9-25:39</span>
+<span class="s0">43            android:name=&quot;androidx.compose.ui.tooling.PreviewActivity&quot;</span>
+<span class="s0">43--&gt;[androidx.compose.ui:ui-tooling-android:1.10.4] /Users/wreck/.gradle/caches/9.4.1/transforms/019bc0ad6d1e1d4fa9b9f858b737c7f8/transformed/ui-tooling/AndroidManifest.xml:24:13-71</span>
+<span class="s0">44            android:exported=&quot;true&quot; /&gt;</span>
+<span class="s0">44--&gt;[androidx.compose.ui:ui-tooling-android:1.10.4] /Users/wreck/.gradle/caches/9.4.1/transforms/019bc0ad6d1e1d4fa9b9f858b737c7f8/transformed/ui-tooling/AndroidManifest.xml:25:13-36</span>
+<span class="s0">45        &lt;activity</span>
+<span class="s0">45--&gt;[androidx.compose.ui:ui-test-manifest:1.10.4] /Users/wreck/.gradle/caches/9.4.1/transforms/553bd32765838f1add94076e5aeb2ec2/transformed/ui-test-manifest-1.10.4/AndroidManifest.xml:23:9-26:79</span>
+<span class="s0">46            android:name=&quot;androidx.activity.ComponentActivity&quot;</span>
+<span class="s0">46--&gt;[androidx.compose.ui:ui-test-manifest:1.10.4] /Users/wreck/.gradle/caches/9.4.1/transforms/553bd32765838f1add94076e5aeb2ec2/transformed/ui-test-manifest-1.10.4/AndroidManifest.xml:24:13-63</span>
+<span class="s0">47            android:exported=&quot;true&quot;</span>
+<span class="s0">47--&gt;[androidx.compose.ui:ui-test-manifest:1.10.4] /Users/wreck/.gradle/caches/9.4.1/transforms/553bd32765838f1add94076e5aeb2ec2/transformed/ui-test-manifest-1.10.4/AndroidManifest.xml:25:13-36</span>
+<span class="s0">48            android:theme=&quot;@android:style/Theme.Material.Light.NoActionBar&quot; /&gt;</span>
+<span class="s0">48--&gt;[androidx.compose.ui:ui-test-manifest:1.10.4] /Users/wreck/.gradle/caches/9.4.1/transforms/553bd32765838f1add94076e5aeb2ec2/transformed/ui-test-manifest-1.10.4/AndroidManifest.xml:26:13-76</span>
+<span class="s0">49</span>
+<span class="s0">50        &lt;uses-library</span>
+<span class="s0">50--&gt;[androidx.window:window:1.5.0] /Users/wreck/.gradle/caches/9.4.1/transforms/67093e2d9c5c6fc2b79dc3998248c73e/transformed/window-1.5.0/AndroidManifest.xml:23:9-25:40</span>
+<span class="s0">51            android:name=&quot;androidx.window.extensions&quot;</span>
+<span class="s0">51--&gt;[androidx.window:window:1.5.0] /Users/wreck/.gradle/caches/9.4.1/transforms/67093e2d9c5c6fc2b79dc3998248c73e/transformed/window-1.5.0/AndroidManifest.xml:24:13-54</span>
+<span class="s0">52            android:required=&quot;false&quot; /&gt;</span>
+<span class="s0">52--&gt;[androidx.window:window:1.5.0] /Users/wreck/.gradle/caches/9.4.1/transforms/67093e2d9c5c6fc2b79dc3998248c73e/transformed/window-1.5.0/AndroidManifest.xml:25:13-37</span>
+<span class="s0">53        &lt;uses-library</span>
+<span class="s0">53--&gt;[androidx.window:window:1.5.0] /Users/wreck/.gradle/caches/9.4.1/transforms/67093e2d9c5c6fc2b79dc3998248c73e/transformed/window-1.5.0/AndroidManifest.xml:26:9-28:40</span>
+<span class="s0">54            android:name=&quot;androidx.window.sidecar&quot;</span>
+<span class="s0">54--&gt;[androidx.window:window:1.5.0] /Users/wreck/.gradle/caches/9.4.1/transforms/67093e2d9c5c6fc2b79dc3998248c73e/transformed/window-1.5.0/AndroidManifest.xml:27:13-51</span>
+<span class="s0">55            android:required=&quot;false&quot; /&gt;</span>
+<span class="s0">55--&gt;[androidx.window:window:1.5.0] /Users/wreck/.gradle/caches/9.4.1/transforms/67093e2d9c5c6fc2b79dc3998248c73e/transformed/window-1.5.0/AndroidManifest.xml:28:13-37</span>
+<span class="s0">56</span>
+<span class="s0">57        &lt;provider</span>
+<span class="s0">57--&gt;[androidx.emoji2:emoji2:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/59ec4d2f52a384bf661f73a95a08aaa9/transformed/emoji2-1.4.0/AndroidManifest.xml:24:9-32:20</span>
+<span class="s0">58            android:name=&quot;androidx.startup.InitializationProvider&quot;</span>
+<span class="s0">58--&gt;[androidx.emoji2:emoji2:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/59ec4d2f52a384bf661f73a95a08aaa9/transformed/emoji2-1.4.0/AndroidManifest.xml:25:13-67</span>
+<span class="s0">59            android:authorities=&quot;com.example.caltrack.androidx-startup&quot;</span>
+<span class="s0">59--&gt;[androidx.emoji2:emoji2:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/59ec4d2f52a384bf661f73a95a08aaa9/transformed/emoji2-1.4.0/AndroidManifest.xml:26:13-68</span>
+<span class="s0">60            android:exported=&quot;false&quot; &gt;</span>
+<span class="s0">60--&gt;[androidx.emoji2:emoji2:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/59ec4d2f52a384bf661f73a95a08aaa9/transformed/emoji2-1.4.0/AndroidManifest.xml:27:13-37</span>
+<span class="s0">61            &lt;meta-data</span>
+<span class="s0">61--&gt;[androidx.emoji2:emoji2:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/59ec4d2f52a384bf661f73a95a08aaa9/transformed/emoji2-1.4.0/AndroidManifest.xml:29:13-31:52</span>
+<span class="s0">62                android:name=&quot;androidx.emoji2.text.EmojiCompatInitializer&quot;</span>
+<span class="s0">62--&gt;[androidx.emoji2:emoji2:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/59ec4d2f52a384bf661f73a95a08aaa9/transformed/emoji2-1.4.0/AndroidManifest.xml:30:17-75</span>
+<span class="s0">63                android:value=&quot;androidx.startup&quot; /&gt;</span>
+<span class="s0">63--&gt;[androidx.emoji2:emoji2:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/59ec4d2f52a384bf661f73a95a08aaa9/transformed/emoji2-1.4.0/AndroidManifest.xml:31:17-49</span>
+<span class="s0">64            &lt;meta-data</span>
+<span class="s0">64--&gt;[androidx.lifecycle:lifecycle-process:2.10.0] /Users/wreck/.gradle/caches/9.4.1/transforms/3dee12dbd5e207e670403ca282a05646/transformed/lifecycle-process-2.10.0/AndroidManifest.xml:29:13-31:52</span>
+<span class="s0">65                android:name=&quot;androidx.lifecycle.ProcessLifecycleInitializer&quot;</span>
+<span class="s0">65--&gt;[androidx.lifecycle:lifecycle-process:2.10.0] /Users/wreck/.gradle/caches/9.4.1/transforms/3dee12dbd5e207e670403ca282a05646/transformed/lifecycle-process-2.10.0/AndroidManifest.xml:30:17-78</span>
+<span class="s0">66                android:value=&quot;androidx.startup&quot; /&gt;</span>
+<span class="s0">66--&gt;[androidx.lifecycle:lifecycle-process:2.10.0] /Users/wreck/.gradle/caches/9.4.1/transforms/3dee12dbd5e207e670403ca282a05646/transformed/lifecycle-process-2.10.0/AndroidManifest.xml:31:17-49</span>
+<span class="s0">67            &lt;meta-data</span>
+<span class="s0">67--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:29:13-31:52</span>
+<span class="s0">68                android:name=&quot;androidx.profileinstaller.ProfileInstallerInitializer&quot;</span>
+<span class="s0">68--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:30:17-85</span>
+<span class="s0">69                android:value=&quot;androidx.startup&quot; /&gt;</span>
+<span class="s0">69--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:31:17-49</span>
+<span class="s0">70        &lt;/provider&gt;</span>
+<span class="s0">71</span>
+<span class="s0">72        &lt;receiver</span>
+<span class="s0">72--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:34:9-52:20</span>
+<span class="s0">73            android:name=&quot;androidx.profileinstaller.ProfileInstallReceiver&quot;</span>
+<span class="s0">73--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:35:13-76</span>
+<span class="s0">74            android:directBootAware=&quot;false&quot;</span>
+<span class="s0">74--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:36:13-44</span>
+<span class="s0">75            android:enabled=&quot;true&quot;</span>
+<span class="s0">75--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:37:13-35</span>
+<span class="s0">76            android:exported=&quot;true&quot;</span>
+<span class="s0">76--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:38:13-36</span>
+<span class="s0">77            android:permission=&quot;android.permission.DUMP&quot; &gt;</span>
+<span class="s0">77--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:39:13-57</span>
+<span class="s0">78            &lt;intent-filter&gt;</span>
+<span class="s0">78--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:40:13-42:29</span>
+<span class="s0">79                &lt;action android:name=&quot;androidx.profileinstaller.action.INSTALL_PROFILE&quot; /&gt;</span>
+<span class="s0">79--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:17-91</span>
+<span class="s0">79--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:25-88</span>
+<span class="s0">80            &lt;/intent-filter&gt;</span>
+<span class="s0">81            &lt;intent-filter&gt;</span>
+<span class="s0">81--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:43:13-45:29</span>
+<span class="s0">82                &lt;action android:name=&quot;androidx.profileinstaller.action.SKIP_FILE&quot; /&gt;</span>
+<span class="s0">82--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:17-85</span>
+<span class="s0">82--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:25-82</span>
+<span class="s0">83            &lt;/intent-filter&gt;</span>
+<span class="s0">84            &lt;intent-filter&gt;</span>
+<span class="s0">84--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:46:13-48:29</span>
+<span class="s0">85                &lt;action android:name=&quot;androidx.profileinstaller.action.SAVE_PROFILE&quot; /&gt;</span>
+<span class="s0">85--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:17-88</span>
+<span class="s0">85--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:25-85</span>
+<span class="s0">86            &lt;/intent-filter&gt;</span>
+<span class="s0">87            &lt;intent-filter&gt;</span>
+<span class="s0">87--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:49:13-51:29</span>
+<span class="s0">88                &lt;action android:name=&quot;androidx.profileinstaller.action.BENCHMARK_OPERATION&quot; /&gt;</span>
+<span class="s0">88--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:17-95</span>
+<span class="s0">88--&gt;[androidx.profileinstaller:profileinstaller:1.4.0] /Users/wreck/.gradle/caches/9.4.1/transforms/6f017c93a46937b3c3d62a9617ef2586/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:25-92</span>
+<span class="s0">89            &lt;/intent-filter&gt;</span>
+<span class="s0">90        &lt;/receiver&gt;</span>
+<span class="s0">91    &lt;/application&gt;</span>
+<span class="s0">92</span>
+<span class="s0">93&lt;/manifest&gt;</span>
+</pre>
+</body>
+</html>
