@@ -23,7 +23,7 @@ private const val PLACEHOLDER_USER = "admin"
 private const val PLACEHOLDER_PASS = "1234"
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(onLoginSuccess: () -> Unit) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
@@ -54,10 +54,11 @@ fun LoginScreen() {
 
         Button(
             onClick = {
-                message = if (username == PLACEHOLDER_USER && password == PLACEHOLDER_PASS) {
-                    "Login successful"
+                if (username == PLACEHOLDER_USER && password == PLACEHOLDER_PASS) {
+                    message = ""
+                    onLoginSuccess()
                 } else {
-                    "Incorrect username or password"
+                    message = "Incorrect username or password"
                 }
             },
             modifier = Modifier.padding(top = 16.dp)
