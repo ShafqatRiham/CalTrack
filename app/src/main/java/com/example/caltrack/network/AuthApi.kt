@@ -2,7 +2,9 @@ package com.example.caltrack.network
 
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface AuthApi {
     @POST("api/auth/register")
@@ -10,4 +12,7 @@ interface AuthApi {
 
     @POST("api/auth/login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
+
+    @GET("api/foods/search")
+    suspend fun searchFoods(@Query("query") query: String): Response<FoodSearchResponse>
 }
