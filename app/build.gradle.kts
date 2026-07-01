@@ -49,5 +49,16 @@ android {
         androidTestImplementation(libs.androidx.junit)
         debugImplementation(libs.androidx.compose.ui.test.manifest)
         debugImplementation(libs.androidx.compose.ui.tooling)
+        // Retrofit for API calls
+        implementation("com.squareup.retrofit2:retrofit:2.9.0")
+        implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+        // For storing JWT token securely
+        implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+        // the rest of your existing dependencies
+        implementation(platform(libs.androidx.compose.bom))
+        implementation(libs.androidx.activity.compose)
+
     }
 }
