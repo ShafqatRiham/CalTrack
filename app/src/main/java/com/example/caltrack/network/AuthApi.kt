@@ -15,4 +15,10 @@ interface AuthApi {
 
     @GET("api/foods/search")
     suspend fun searchFoods(@Query("query") query: String): Response<FoodSearchResponse>
+
+    @POST("api/meals/log")
+    suspend fun logMeal(@Body request: MealLogRequest): Response<MealLogResponse>
+
+    @POST("api/foods/save")
+    suspend fun saveFood(@Body request: SaveFoodRequest): Response<SaveFoodResponse>
 }
