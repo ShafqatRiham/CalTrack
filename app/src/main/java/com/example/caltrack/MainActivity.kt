@@ -21,10 +21,21 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation() {
     var isLoggedIn by remember { mutableStateOf(false) }
+    var showRegister by remember { mutableStateOf(false) }
+    var loggedInUserId by remember { mutableStateOf(1) }
 
-    if (isLoggedIn) {
-        HomeScreen()
-    } else {
-        LoginScreen(onLoginSuccess = { isLoggedIn = true })
+    when {
+        isLoggedIn -> HomeScreen(userId = loggedInUserId)
+        showRegister -> RegisterScreen(
+            onRegisterSuccess = { showRegister = false },
+            onBackToLogin = { showRegister = false }
+        )
+        else -> LoginScreen(
+            onLoginSuccess = { userId ->
+                loggedInUserId = userId
+                isLoggedIn = true
+            },
+            onNavigateToRegister = { showRegister = true }
+        )
     }
 }
