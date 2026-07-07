@@ -3,7 +3,11 @@ package com.example.caltrack.network
 data class RegisterRequest(
     val username: String,
     val email: String,
-    val password: String
+    val password: String,
+    val weight: Double? = null,
+    val height: Double? = null,
+    val weight_unit: String = "kg",
+    val height_unit: String = "cm"
 )
 
 data class LoginRequest(

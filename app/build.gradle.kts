@@ -60,5 +60,7 @@ android {
         implementation(platform(libs.androidx.compose.bom))
         implementation(libs.androidx.activity.compose)
 
+        implementation("androidx.health.connect:connect-client:1.2.0-alpha04")
+
     }
 }

@@ -44,6 +44,10 @@ fun RegisterScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+    var weight by remember { mutableStateOf("") }
+    var height by remember { mutableStateOf("") }
+    var weightUnit by remember { mutableStateOf("kg") }
+    var heightUnit by remember { mutableStateOf("cm") }
     var passwordVisible by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
     var successMessage by remember { mutableStateOf<String?>(null) }
@@ -75,7 +79,11 @@ fun RegisterScreen(
                     RegisterRequest(
                         username = username,
                         email = email,
-                        password = password
+                        password = password,
+                        weight = weight.toDoubleOrNull(),
+                        height = height.toDoubleOrNull(),
+                        weight_unit = weightUnit,
+                        height_unit = heightUnit
                     )
                 )
                 if (response.isSuccessful) {
@@ -188,6 +196,34 @@ fun RegisterScreen(
                 singleLine = true,
                 shape = RoundedCornerShape(12.dp),
                 visualTransformation = PasswordVisualTransformation(),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = weight,
+                onValueChange = {
+                    weight = it
+                    errorMessage = null
+                },
+                label = { Text("Weight (kg) — optional") },
+                singleLine = true,
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = height,
+                onValueChange = {
+                    height = it
+                    errorMessage = null
+                },
+                label = { Text("Height (cm) — optional") },
+                singleLine = true,
+                shape = RoundedCornerShape(12.dp),
                 modifier = Modifier.fillMaxWidth()
             )
 
