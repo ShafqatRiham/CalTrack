@@ -1,6 +1,7 @@
 package com.example.caltrack
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,7 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -20,15 +24,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.caltrack.network.RetrofitClient
 import com.example.caltrack.ui.theme.Purple40
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 data class FoodItem(
     val externalApiId: String?,
@@ -40,14 +47,36 @@ data class FoodItem(
     val fat: Double?
 )
 
+data class LoggedFoodItem(
+    val id: String = UUID.randomUUID().toString(),
+    val food: FoodItem
+)
+
 @Composable
 fun HomeScreen() {
     var query by remember { mutableStateOf("") }
     var results by remember { mutableStateOf<List<FoodItem>>(emptyList()) }
     var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
+    var addedMessage by remember { mutableStateOf("") }
+
+    val loggedFoods = remember { mutableStateListOf<LoggedFoodItem>() }
+
+    val totalCalories = loggedFoods.sumOf { it.food.calories ?: 0.0 }
+    val totalProtein = loggedFoods.sumOf { it.food.protein ?: 0.0 }
+    val totalCarbs = loggedFoods.sumOf { it.food.carbs ?: 0.0 }
+    val totalFat = loggedFoods.sumOf { it.food.fat ?: 0.0 }
 
     val scope = rememberCoroutineScope()
+
+    fun addToLog(food: FoodItem) {
+        loggedFoods.add(LoggedFoodItem(food = food))
+        addedMessage = "Added ${food.name}"
+    }
+
+    fun removeFromLog(id: String) {
+        loggedFoods.removeAll { it.id == id }
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -64,13 +93,16 @@ fun HomeScreen() {
 
                 Button(onClick = {
                     if (query.isBlank()) {
-                        errorMessage = "Please enter a food to search"
+                        results = emptyList()
+                        errorMessage = ""
+                        addedMessage = ""
                         return@Button
                     }
 
                     scope.launch {
                         isLoading = true
                         errorMessage = ""
+                        addedMessage = ""
                         results = emptyList()
 
                         try {
@@ -116,15 +148,50 @@ fun HomeScreen() {
             if (errorMessage.isNotEmpty()) {
                 Text(
                     text = errorMessage,
-                    color = androidx.compose.ui.graphics.Color.Red,
+                    color = Color.Red,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
+            }
+
+            if (addedMessage.isNotEmpty()) {
+                Text(
+                    text = addedMessage,
+                    color = Purple40,
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
+
+            if (results.isNotEmpty()) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "${results.size} result${if (results.size == 1) "" else "s"}",
+                        fontSize = 12.sp,
+                        color = Color.Gray
+                    )
+                    Text(
+                        text = "Clear results ✕",
+                        fontSize = 13.sp,
+                        color = Purple40,
+                        modifier = Modifier.clickable {
+                            results = emptyList()
+                            errorMessage = ""
+                            addedMessage = ""
+                        }
+                    )
+                }
+                Spacer(modifier = Modifier.height(4.dp))
             }
 
             LazyColumn {
                 items(results) { food ->
                     Column(modifier = Modifier
                         .fillMaxWidth()
+                        .clickable { addToLog(food) }
                         .padding(vertical = 8.dp)
                     ) {
                         Text(
@@ -135,7 +202,7 @@ fun HomeScreen() {
                             Text(
                                 text = food.brand,
                                 fontSize = 12.sp,
-                                color = androidx.compose.ui.graphics.Color.Gray
+                                color = Color.Gray
                             )
                         }
                         Text(
@@ -145,6 +212,11 @@ fun HomeScreen() {
                                     "F: ${food.fat?.toInt() ?: "?"}g",
                             fontSize = 12.sp
                         )
+                        Text(
+                            text = "Tap to add",
+                            fontSize = 11.sp,
+                            color = Purple40
+                        )
                     }
                 }
             }
@@ -153,11 +225,80 @@ fun HomeScreen() {
         Column(
             modifier = Modifier
                 .weight(1f)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Gnome")
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(12.dp),
+                colors = CardDefaults.cardColors(containerColor = Purple40)
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        text = "Today's Totals",
+                        color = Color.White,
+                        fontSize = 16.sp
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "${totalCalories.toInt()} kcal",
+                        color = Color.White,
+                        fontSize = 22.sp
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Protein: ${totalProtein.toInt()}g   " +
+                                "Carbs: ${totalCarbs.toInt()}g   " +
+                                "Fat: ${totalFat.toInt()}g",
+                        color = Color.White,
+                        fontSize = 13.sp
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            if (loggedFoods.isEmpty()) {
+                Text(
+                    text = "Nothing logged yet. Search above and tap a result to add it.",
+                    fontSize = 13.sp,
+                    color = Color.Gray
+                )
+            } else {
+                LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                    items(loggedFoods, key = { it.id }) { logged ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(text = logged.food.name, fontSize = 14.sp)
+                                Text(
+                                    text = "${logged.food.calories?.toInt() ?: "?"} kcal | " +
+                                            "P: ${logged.food.protein?.toInt() ?: "?"}g | " +
+                                            "C: ${logged.food.carbs?.toInt() ?: "?"}g | " +
+                                            "F: ${logged.food.fat?.toInt() ?: "?"}g",
+                                    fontSize = 11.sp,
+                                    color = Color.Gray
+                                )
+                            }
+                            Text(
+                                text = "✕",
+                                color = Color.Red,
+                                fontSize = 16.sp,
+                                modifier = Modifier
+                                    .clickable { removeFromLog(logged.id) }
+                                    .padding(start = 12.dp)
+                            )
+                        }
+                    }
+                }
+            }
         }
 
         Column(
