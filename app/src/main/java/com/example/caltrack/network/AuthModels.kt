@@ -3,7 +3,11 @@ package com.example.caltrack.network
 data class RegisterRequest(
     val username: String,
     val email: String,
-    val password: String
+    val password: String,
+    val weight: Double? = null,
+    val height: Double? = null,
+    val weight_unit: String = "kg",
+    val height_unit: String = "cm"
 )
 
 data class LoginRequest(
@@ -44,4 +48,41 @@ data class FoodSearchResult(
 
 data class FoodSearchResponse(
     val results: List<FoodSearchResult>
+)
+
+data class MealLogItem(
+    val food_id: Int,
+    val quantity: Double,
+    val unit: String,
+    val calories: Double,
+    val protein: Double,
+    val carbs: Double,
+    val fat: Double
+)
+
+data class MealLogRequest(
+    val user_id: Int,
+    val meal_type: String,
+    val log_date: String,
+    val log_time: String?,
+    val items: List<MealLogItem>
+)
+
+data class MealLogResponse(
+    val message: String,
+    val log_id: Int
+)
+
+data class SaveFoodResponse(
+    val food_id: Int,
+    val message: String
+)
+
+data class SaveFoodRequest(
+    val name: String,
+    val calories: Double,
+    val protein: Double,
+    val carbs: Double,
+    val fat: Double,
+    val external_api_id: String
 )

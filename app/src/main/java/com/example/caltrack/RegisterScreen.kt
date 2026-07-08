@@ -1,5 +1,6 @@
 package com.example.caltrack
 
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,24 +31,43 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.caltrack.network.LoginRequest
+import com.example.caltrack.network.RegisterRequest
 import com.example.caltrack.network.RetrofitClient
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(onLoginSuccess: (Int) -> Unit = {}, onNavigateToRegister: () -> Unit = {}) {
+fun RegisterScreen(
+    onRegisterSuccess: () -> Unit = {},
+    onBackToLogin: () -> Unit = {}
+) {
     var username by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+    var weight by remember { mutableStateOf("") }
+    var height by remember { mutableStateOf("") }
+    var weightUnit by remember { mutableStateOf("kg") }
+    var heightUnit by remember { mutableStateOf("cm") }
     var passwordVisible by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    var successMessage by remember { mutableStateOf<String?>(null) }
     var isLoading by remember { mutableStateOf(false) }
 
     val scope = rememberCoroutineScope()
     val colors = MaterialTheme.colorScheme
 
-    fun attemptLogin() {
-        if (username.isBlank() || password.isBlank()) {
+    fun attemptRegister() {
+        // Basic validation
+        if (username.isBlank() || email.isBlank() || password.isBlank()) {
             errorMessage = "Please fill in all fields"
+            return
+        }
+        if (password != confirmPassword) {
+            errorMessage = "Passwords do not match"
+            return
+        }
+        if (password.length < 6) {
+            errorMessage = "Password must be at least 6 characters"
             return
         }
 
@@ -55,23 +75,32 @@ fun LoginScreen(onLoginSuccess: (Int) -> Unit = {}, onNavigateToRegister: () -> 
             isLoading = true
             errorMessage = null
             try {
-                val response = RetrofitClient.authApi.login(
-                    LoginRequest(username = username, password = password)
+                val response = RetrofitClient.authApi.register(
+                    RegisterRequest(
+                        username = username,
+                        email = email,
+                        password = password,
+                        weight = weight.toDoubleOrNull(),
+                        height = height.toDoubleOrNull(),
+                        weight_unit = weightUnit,
+                        height_unit = heightUnit
+                    )
                 )
                 if (response.isSuccessful) {
-                    val userId = response.body()?.user?.user_id ?: 1
-                    android.util.Log.d("LoginDebug", "Logged in user_id: $userId")
-                    onLoginSuccess(userId)
+                    successMessage = "Account created successfully! Please log in."
+                    // Navigate back to login after short delay
+                    kotlinx.coroutines.delay(1500)
+                    onRegisterSuccess()
                 } else {
                     errorMessage = when (response.code()) {
-                        401 -> "Incorrect username or password"
+                        409 -> "Username or email already exists"
                         400 -> "Please fill in all fields"
-                        else -> "Login failed. Please try again"
+                        else -> "Registration failed. Please try again"
                     }
                 }
             } catch (e: Exception) {
                 errorMessage = "Could not connect to server. Check your connection"
-                android.util.Log.e("LoginDebug", "Error: ${e.javaClass.name}: ${e.message}")
+                android.util.Log.e("RegisterDebug", "Error: ${e.message}")
             } finally {
                 isLoading = false
             }
@@ -88,10 +117,9 @@ fun LoginScreen(onLoginSuccess: (Int) -> Unit = {}, onNavigateToRegister: () -> 
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
-        ) //here?
-        {
+        ) {
             Text(
-                text = "CalTrack",
+                text = "Create Account",
                 color = colors.primary,
                 fontSize = 26.sp,
                 fontWeight = FontWeight.Bold
@@ -100,7 +128,7 @@ fun LoginScreen(onLoginSuccess: (Int) -> Unit = {}, onNavigateToRegister: () -> 
             Spacer(Modifier.height(4.dp))
 
             Text(
-                text = "Log in to keep tracking",
+                text = "Start tracking your calories today",
                 color = colors.onSurfaceVariant,
                 fontSize = 13.sp
             )
@@ -114,6 +142,20 @@ fun LoginScreen(onLoginSuccess: (Int) -> Unit = {}, onNavigateToRegister: () -> 
                     errorMessage = null
                 },
                 label = { Text("Username") },
+                singleLine = true,
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = email,
+                onValueChange = {
+                    email = it
+                    errorMessage = null
+                },
+                label = { Text("Email") },
                 singleLine = true,
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier.fillMaxWidth()
@@ -142,6 +184,49 @@ fun LoginScreen(onLoginSuccess: (Int) -> Unit = {}, onNavigateToRegister: () -> 
                 modifier = Modifier.fillMaxWidth()
             )
 
+            Spacer(Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = confirmPassword,
+                onValueChange = {
+                    confirmPassword = it
+                    errorMessage = null
+                },
+                label = { Text("Confirm Password") },
+                singleLine = true,
+                shape = RoundedCornerShape(12.dp),
+                visualTransformation = PasswordVisualTransformation(),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = weight,
+                onValueChange = {
+                    weight = it
+                    errorMessage = null
+                },
+                label = { Text("Weight (kg) — optional") },
+                singleLine = true,
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = height,
+                onValueChange = {
+                    height = it
+                    errorMessage = null
+                },
+                label = { Text("Height (cm) — optional") },
+                singleLine = true,
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier.fillMaxWidth()
+            )
+
             if (errorMessage != null) {
                 Spacer(Modifier.height(10.dp))
                 Text(
@@ -152,10 +237,20 @@ fun LoginScreen(onLoginSuccess: (Int) -> Unit = {}, onNavigateToRegister: () -> 
                 )
             }
 
+            if (successMessage != null) {
+                Spacer(Modifier.height(10.dp))
+                Text(
+                    text = successMessage!!,
+                    color = androidx.compose.ui.graphics.Color.Green,
+                    fontSize = 12.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
+
             Spacer(Modifier.height(20.dp))
 
             Button(
-                onClick = { attemptLogin() },
+                onClick = { attemptRegister() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
@@ -172,15 +267,15 @@ fun LoginScreen(onLoginSuccess: (Int) -> Unit = {}, onNavigateToRegister: () -> 
                         color = colors.onPrimary
                     )
                 } else {
-                    Text("Log In", fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
+                    Text("Create Account", fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
                 }
             }
 
             Spacer(Modifier.height(12.dp))
 
-            TextButton(onClick = onNavigateToRegister) {
+            TextButton(onClick = onBackToLogin) {
                 Text(
-                    text = "Don't have an account? Register",
+                    text = "Already have an account? Log in",
                     fontSize = 13.sp,
                     color = colors.primary
                 )
