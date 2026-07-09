@@ -7,7 +7,8 @@ data class RegisterRequest(
     val weight: Double? = null,
     val height: Double? = null,
     val weight_unit: String = "kg",
-    val height_unit: String = "cm"
+    val height_unit: String = "cm",
+    val gender: String? = null
 )
 
 data class LoginRequest(
