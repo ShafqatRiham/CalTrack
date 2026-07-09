@@ -21,4 +21,7 @@ interface AuthApi {
 
     @POST("api/foods/save")
     suspend fun saveFood(@Body request: SaveFoodRequest): Response<SaveFoodResponse>
+
+    @POST("api/activity/log")
+    suspend fun logActivity(@Body request: ActivityLogRequest): Response<ActivityLogResponse>
 }

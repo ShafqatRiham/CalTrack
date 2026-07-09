@@ -86,3 +86,16 @@ data class SaveFoodRequest(
     val fat: Double,
     val external_api_id: String
 )
+
+data class ActivityLogRequest(
+    val user_id: Int,
+    val steps: Int,
+    val log_date: String
+)
+
+data class ActivityLogResponse(
+    val message: String,
+    val steps: Int,
+    val calories_burned: Double,
+    val note: String
+)

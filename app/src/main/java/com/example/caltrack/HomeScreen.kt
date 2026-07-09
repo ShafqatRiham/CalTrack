@@ -53,7 +53,7 @@ data class LoggedFoodItem(
 )
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(userId: Int = 1) {
     var query by remember { mutableStateOf("") }
     var results by remember { mutableStateOf<List<FoodItem>>(emptyList()) }
     var isLoading by remember { mutableStateOf(false) }
@@ -61,6 +61,13 @@ fun HomeScreen() {
     var addedMessage by remember { mutableStateOf("") }
 
     val loggedFoods = remember { mutableStateListOf<LoggedFoodItem>() }
+
+    var showStepsDialog by remember { mutableStateOf(false) }
+    var stepsInput by remember { mutableStateOf("") }
+    var todaySteps by remember { mutableStateOf(0) }
+    var caloriesBurned by remember { mutableStateOf(0.0) }
+    var stepsMessage by remember { mutableStateOf("") }
+    var isLoggingSteps by remember { mutableStateOf(false) }
 
     val totalCalories = loggedFoods.sumOf { it.food.calories ?: 0.0 }
     val totalProtein = loggedFoods.sumOf { it.food.protein ?: 0.0 }
@@ -76,6 +83,94 @@ fun HomeScreen() {
 
     fun removeFromLog(id: String) {
         loggedFoods.removeAll { it.id == id }
+    }
+
+    if (showStepsDialog) {
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = { showStepsDialog = false },
+            title = { Text("Log Steps") },
+            text = {
+                Column {
+                    Text(
+                        text = "Enter your step count for today",
+                        fontSize = 13.sp,
+                        color = Color.Gray,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    androidx.compose.material3.OutlinedTextField(
+                        value = stepsInput,
+                        onValueChange = { stepsInput = it },
+                        label = { Text("Steps") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    if (stepsMessage.isNotEmpty()) {
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            text = stepsMessage,
+                            fontSize = 12.sp,
+                            color = if (stepsMessage.startsWith("Error")) Color.Red else Color.Green
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        val steps = stepsInput.toIntOrNull()
+                        if (steps == null || steps < 0) {
+                            stepsMessage = "Please enter a valid step count"
+                            return@Button
+                        }
+
+                        scope.launch {
+                            isLoggingSteps = true
+                            stepsMessage = ""
+                            try {
+                                val today = java.time.LocalDate.now()
+                                    .format(java.time.format.DateTimeFormatter.ISO_DATE)
+
+                                val response = RetrofitClient.authApi.logActivity(
+                                    com.example.caltrack.network.ActivityLogRequest(
+                                        user_id = userId,
+                                        steps = steps,
+                                        log_date = today
+                                    )
+                                )
+
+                                if (response.isSuccessful) {
+                                    val body = response.body()
+                                    todaySteps = steps
+                                    caloriesBurned = body?.calories_burned ?: 0.0
+                                    stepsMessage = "Logged successfully"
+                                    kotlinx.coroutines.delay(1000)
+                                    showStepsDialog = false
+                                    stepsInput = ""
+                                    stepsMessage = ""
+                                } else {
+                                    stepsMessage = "Error: Failed to log steps"
+                                }
+                            } catch (e: Exception) {
+                                stepsMessage = "Error: Could not connect to server"
+                                android.util.Log.e("HomeScreen", "Steps error: ${e.message}")
+                            } finally {
+                                isLoggingSteps = false
+                            }
+                        }
+                    },
+                    enabled = !isLoggingSteps
+                ) {
+                    Text(if (isLoggingSteps) "Logging..." else "Log Steps")
+                }
+            },
+            dismissButton = {
+                androidx.compose.material3.TextButton(
+                    onClick = { showStepsDialog = false }
+                ) {
+                    Text("Cancel")
+                }
+            }
+        )
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -243,7 +338,7 @@ fun HomeScreen() {
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "${totalCalories.toInt()} kcal",
+                        text = "${totalCalories.toInt()} kcal consumed",
                         color = Color.White,
                         fontSize = 22.sp
                     )
@@ -255,6 +350,19 @@ fun HomeScreen() {
                         color = Color.White,
                         fontSize = 13.sp
                     )
+                    if (todaySteps > 0) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Steps: $todaySteps  |  Burned: ${caloriesBurned.toInt()} kcal",
+                            color = Color.White,
+                            fontSize = 13.sp
+                        )
+                        Text(
+                            text = "Net calories: ${(totalCalories - caloriesBurned).toInt()} kcal",
+                            color = Color.White,
+                            fontSize = 13.sp
+                        )
+                    }
                 }
             }
 
@@ -301,14 +409,23 @@ fun HomeScreen() {
             }
         }
 
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = Purple40),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.CenterHorizontally
+                .background(color = Purple40)
+                .padding(8.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "Buttons and stuff")
+            Button(
+                onClick = { showStepsDialog = true },
+                colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = Purple40
+                )
+            ) {
+                Text("Log Steps")
+            }
         }
     }
 }
