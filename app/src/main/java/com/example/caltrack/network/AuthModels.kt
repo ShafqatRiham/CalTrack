@@ -74,6 +74,39 @@ data class MealLogResponse(
     val log_id: Int
 )
 
+data class MealLogItemResponse(
+    val item_id: Int,
+    val food_id: Int,
+    val food_name: String,
+    val quantity: Double,
+    val unit: String,
+    val calories: Double,
+    val protein: Double,
+    val carbs: Double,
+    val fat: Double
+)
+
+data class MealLogEntry(
+    val log_id: Int,
+    val meal_type: String,
+    val log_date: String,
+    val log_time: String?,
+    val items: List<MealLogItemResponse>
+)
+
+data class MealsResponse(
+    val date: String,
+    val meals: List<MealLogEntry>,
+    val daily_totals: DailyTotals
+)
+
+data class DailyTotals(
+    val calories: Double,
+    val protein: Double,
+    val carbs: Double,
+    val fat: Double
+)
+
 data class SaveFoodResponse(
     val food_id: Int,
     val message: String
@@ -99,4 +132,38 @@ data class ActivityLogResponse(
     val steps: Int,
     val calories_burned: Double,
     val note: String
+)
+
+data class ActivityResponse(
+    val date: String,
+    val steps: Int,
+    val calories_burned: Double
+)
+
+data class LeaderboardEntry(
+    val rank: Int,
+    val user_id: Int,
+    val username: String,
+    val streak: Int,
+    val last_log_date: String?
+)
+
+data class LeaderboardResponse(
+    val leaderboard: List<LeaderboardEntry>
+)
+
+data class SetGoalRequest(
+    val user_id: Int,
+    val goal_date: String,
+    val calorie_goal: Int
+)
+
+data class SetGoalResponse(
+    val message: String,
+    val goal_date: String,
+    val calorie_goal: Int
+)
+
+data class GetGoalResponse(
+    val calorie_goal: Int?
 )
