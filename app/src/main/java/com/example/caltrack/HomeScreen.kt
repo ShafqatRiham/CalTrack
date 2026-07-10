@@ -177,7 +177,6 @@ fun HomeScreen(
             } catch (e: Exception) {
                 todaySteps = 0
                 caloriesBurned = 0.0
-                android.util.Log.e("HomeScreen", "Fetch activity error: ${e.message}")
             }
         }
     }
@@ -197,7 +196,6 @@ fun HomeScreen(
                 }
             } catch (e: Exception) {
                 calorieGoal = null
-                android.util.Log.e("HomeScreen", "Fetch goal error: ${e.message}")
             }
         }
     }
@@ -235,7 +233,6 @@ fun HomeScreen(
                     }
                 }
             } catch (e: Exception) {
-                android.util.Log.e("HomeScreen", "Fetch meals error: ${e.message}")
             } finally {
                 isFetchingMeals = false
             }
@@ -312,7 +309,6 @@ fun HomeScreen(
                                 }
                             } catch (e: Exception) {
                                 stepsMessage = "Error: Could not connect to server"
-                                android.util.Log.e("HomeScreen", "Steps error: ${e.message}")
                             } finally {
                                 isLoggingSteps = false
                             }
@@ -364,7 +360,7 @@ fun HomeScreen(
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .menuAnchor()
+                                .menuAnchor(androidx.compose.material3.MenuAnchorType.PrimaryNotEditable, true)
                         )
                         ExposedDropdownMenu(
                             expanded = mealTypeExpanded,
@@ -453,7 +449,6 @@ fun HomeScreen(
                                 }
                             } catch (e: Exception) {
                                 addedMessage = "Could not connect to server"
-                                android.util.Log.e("HomeScreen", "Log error: ${e.message}")
                             } finally {
                                 isLoggingFood = false
                             }
@@ -727,7 +722,6 @@ fun HomeScreen(
                                 }
                             } catch (e: Exception) {
                                 customFoodMessage = "Error: Could not connect to server"
-                                android.util.Log.e("HomeScreen", "Custom food error: ${e.message}")
                             } finally {
                                 isSavingCustomFood = false
                             }
@@ -821,7 +815,6 @@ fun HomeScreen(
                             }
                         } catch (e: Exception) {
                             errorMessage = "Could not connect to server"
-                            android.util.Log.e("HomeScreen", "Search error: ${e.message}")
                         } finally {
                             isLoading = false
                         }
