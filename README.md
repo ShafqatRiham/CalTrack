@@ -58,6 +58,7 @@ DB_NAME=caltrack_project_db
 JWT_SECRET=makethisalongrandomunguessablestring
 
 PORT=3000
+
 4. Replace your_actual_mysql_password with the password you set when creating your MySQL connection. If you did not set a password, leave it empty (DB_PASSWORD=)
 5. Open the command terminal in VS Code
 6. In it, install the dependencies by typing "npm install" but make sure your terminal is inside the CalTrack_API folder before running. (You can go to the project folder in File Explorer, copy the path, and paste "cd {path}" in the command terminal)
