@@ -45,7 +45,6 @@ import kotlinx.coroutines.launch
 fun LeaderboardScreen(
     currentUserId: Int = 1,
     onNavigateToHome: () -> Unit = {},
-    onNavigateToProfile: () -> Unit = {}
 ) {
     var leaderboard by remember { mutableStateOf<List<LeaderboardEntry>>(emptyList()) }
     var isLoading by remember { mutableStateOf(false) }
@@ -246,15 +245,7 @@ fun LeaderboardScreen(
             ) {
                 Text("Leaderboard")
             }
-            Button(
-                onClick = onNavigateToProfile,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,
-                    contentColor = Purple40
-                )
-            ) {
-                Text("Profile")
-            }
+
         }
     }
 }
