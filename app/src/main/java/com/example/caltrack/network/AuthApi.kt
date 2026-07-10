@@ -21,4 +21,32 @@ interface AuthApi {
 
     @POST("api/foods/save")
     suspend fun saveFood(@Body request: SaveFoodRequest): Response<SaveFoodResponse>
+
+    @POST("api/activity/log")
+    suspend fun logActivity(@Body request: ActivityLogRequest): Response<ActivityLogResponse>
+
+    @GET("api/meals")
+    suspend fun getMeals(
+        @Query("user_id") userId: Int,
+        @Query("date") date: String
+    ): Response<MealsResponse>
+
+    @GET("api/leaderboard")
+    suspend fun getLeaderboard(): Response<LeaderboardResponse>
+
+    @GET("api/activity")
+    suspend fun getActivity(
+        @Query("user_id") userId: Int,
+        @Query("date") date: String
+    ): Response<ActivityResponse>
+
+    @POST("api/goals")
+    suspend fun setGoal(@Body request: SetGoalRequest): Response<SetGoalResponse>
+
+    @GET("api/goals")
+    suspend fun getGoal(
+        @Query("user_id") userId: Int,
+        @Query("date") date: String
+    ): Response<GetGoalResponse>
+
 }

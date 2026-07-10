@@ -34,7 +34,12 @@ import androidx.compose.ui.unit.sp
 import com.example.caltrack.network.RegisterRequest
 import com.example.caltrack.network.RetrofitClient
 import kotlinx.coroutines.launch
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(
     onRegisterSuccess: () -> Unit = {},
@@ -48,6 +53,8 @@ fun RegisterScreen(
     var height by remember { mutableStateOf("") }
     var weightUnit by remember { mutableStateOf("kg") }
     var heightUnit by remember { mutableStateOf("cm") }
+    var gender by remember { mutableStateOf("prefer_not_to_say") }
+    var genderExpanded by remember { mutableStateOf(false) }
     var passwordVisible by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
     var successMessage by remember { mutableStateOf<String?>(null) }
@@ -83,7 +90,8 @@ fun RegisterScreen(
                         weight = weight.toDoubleOrNull(),
                         height = height.toDoubleOrNull(),
                         weight_unit = weightUnit,
-                        height_unit = heightUnit
+                        height_unit = heightUnit,
+                        gender = gender
                     )
                 )
                 if (response.isSuccessful) {
@@ -248,6 +256,56 @@ fun RegisterScreen(
             }
 
             Spacer(Modifier.height(20.dp))
+
+
+            Text(
+                text = "Gender (optional)",
+                fontSize = 12.sp,
+                color = colors.onSurfaceVariant
+            )
+
+            Spacer(Modifier.height(4.dp))
+
+            val genderOptions = listOf(
+                "male" to "Male",
+                "female" to "Female",
+                "other" to "Other",
+                "prefer_not_to_say" to "Prefer not to say"
+            )
+
+            ExposedDropdownMenuBox(
+                expanded = genderExpanded,
+                onExpandedChange = { genderExpanded = it }
+            ) {
+                OutlinedTextField(
+                    value = genderOptions.find { it.first == gender }?.second ?: "Prefer not to say",
+                    onValueChange = {},
+                    readOnly = true,
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = genderExpanded)
+                    },
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .menuAnchor()
+                )
+                ExposedDropdownMenu(
+                    expanded = genderExpanded,
+                    onDismissRequest = { genderExpanded = false }
+                ) {
+                    genderOptions.forEach { (value, label) ->
+                        DropdownMenuItem(
+                            text = { Text(label) },
+                            onClick = {
+                                gender = value
+                                genderExpanded = false
+                            }
+                        )
+                    }
+                }
+            }
+
+            Spacer(Modifier.height(12.dp))
 
             Button(
                 onClick = { attemptRegister() },

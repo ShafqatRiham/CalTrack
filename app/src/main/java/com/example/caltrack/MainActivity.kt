@@ -22,20 +22,33 @@ class MainActivity : ComponentActivity() {
 fun AppNavigation() {
     var isLoggedIn by remember { mutableStateOf(false) }
     var showRegister by remember { mutableStateOf(false) }
+    var showLeaderboard by remember { mutableStateOf(false) }
     var loggedInUserId by remember { mutableStateOf(1) }
 
     when {
-        isLoggedIn -> HomeScreen(userId = loggedInUserId)
-        showRegister -> RegisterScreen(
-            onRegisterSuccess = { showRegister = false },
-            onBackToLogin = { showRegister = false }
-        )
-        else -> LoginScreen(
+        !isLoggedIn && !showRegister -> LoginScreen(
             onLoginSuccess = { userId ->
                 loggedInUserId = userId
                 isLoggedIn = true
             },
             onNavigateToRegister = { showRegister = true }
+        )
+        showRegister -> RegisterScreen(
+            onRegisterSuccess = { showRegister = false },
+            onBackToLogin = { showRegister = false }
+        )
+        showLeaderboard -> LeaderboardScreen(
+            currentUserId = loggedInUserId,
+            onNavigateToHome = { showLeaderboard = false }
+        )
+        else -> HomeScreen(
+            userId = loggedInUserId,
+            onNavigateToLeaderboard = { showLeaderboard = true },
+            onLogout = {
+                isLoggedIn = false
+                showLeaderboard = false
+                loggedInUserId = 1
+            }
         )
     }
 }
