@@ -49,4 +49,7 @@ interface AuthApi {
         @Query("date") date: String
     ): Response<GetGoalResponse>
 
+    @POST("api/foods/custom")
+    suspend fun saveCustomFood(@Body request: SaveCustomFoodRequest): Response<SaveFoodResponse>
+
 }

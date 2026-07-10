@@ -59,6 +59,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.UUID
+import com.example.caltrack.network.SaveCustomFoodRequest
 
 data class FoodItem(
     val externalApiId: String?,
@@ -138,6 +139,17 @@ fun HomeScreen(
 
     val mealTypes = listOf("breakfast", "lunch", "dinner", "snack")
     val scope = rememberCoroutineScope()
+
+    var showCustomFoodDialog by remember { mutableStateOf(false) }
+    var customFoodName by remember { mutableStateOf("") }
+    var customFoodCalories by remember { mutableStateOf("") }
+    var customFoodProtein by remember { mutableStateOf("") }
+    var customFoodCarbs by remember { mutableStateOf("") }
+    var customFoodFat by remember { mutableStateOf("") }
+    var customFoodFiber by remember { mutableStateOf("") }
+    var customFoodSodium by remember { mutableStateOf("") }
+    var isSavingCustomFood by remember { mutableStateOf(false) }
+    var customFoodMessage by remember { mutableStateOf("") }
 
     // today always reflects selected date
     val today = selectedDate.format(DateTimeFormatter.ISO_DATE)
@@ -575,6 +587,175 @@ fun HomeScreen(
         )
     }
 
+    // Custom Food Dialog
+    if (showCustomFoodDialog) {
+        AlertDialog(
+            onDismissRequest = { showCustomFoodDialog = false },
+            title = { Text("Add Custom Food") },
+            text = {
+                LazyColumn {
+                    item {
+                        Text(
+                            text = "Enter the nutritional information per 100g serving",
+                            fontSize = 12.sp,
+                            color = Color.Gray,
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                        OutlinedTextField(
+                            value = customFoodName,
+                            onValueChange = { customFoodName = it },
+                            label = { Text("Food Name *") },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        OutlinedTextField(
+                            value = customFoodCalories,
+                            onValueChange = { customFoodCalories = it },
+                            label = { Text("Calories (kcal) *") },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        OutlinedTextField(
+                            value = customFoodProtein,
+                            onValueChange = { customFoodProtein = it },
+                            label = { Text("Protein (g)") },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        OutlinedTextField(
+                            value = customFoodCarbs,
+                            onValueChange = { customFoodCarbs = it },
+                            label = { Text("Carbohydrates (g)") },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        OutlinedTextField(
+                            value = customFoodFat,
+                            onValueChange = { customFoodFat = it },
+                            label = { Text("Fat (g)") },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        OutlinedTextField(
+                            value = customFoodFiber,
+                            onValueChange = { customFoodFiber = it },
+                            label = { Text("Fiber (g)") },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        OutlinedTextField(
+                            value = customFoodSodium,
+                            onValueChange = { customFoodSodium = it },
+                            label = { Text("Sodium (mg)") },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        if (customFoodMessage.isNotEmpty()) {
+                            Spacer(Modifier.height(8.dp))
+                            Text(
+                                text = customFoodMessage,
+                                fontSize = 12.sp,
+                                color = if (customFoodMessage.startsWith("Error")) Color.Red else Color.Green
+                            )
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (customFoodName.isBlank()) {
+                            customFoodMessage = "Error: Food name is required"
+                            return@Button
+                        }
+                        val calories = customFoodCalories.toDoubleOrNull()
+                        if (calories == null || calories <= 0) {
+                            customFoodMessage = "Error: Please enter a valid calorie amount"
+                            return@Button
+                        }
+
+                        scope.launch {
+                            isSavingCustomFood = true
+                            customFoodMessage = ""
+                            try {
+                                // Save custom food to database
+                                val saveResponse = RetrofitClient.authApi.saveCustomFood(
+                                    SaveCustomFoodRequest(
+                                        user_id = userId,
+                                        name = customFoodName,
+                                        calories = calories,
+                                        protein = customFoodProtein.toDoubleOrNull() ?: 0.0,
+                                        carbs = customFoodCarbs.toDoubleOrNull() ?: 0.0,
+                                        fat = customFoodFat.toDoubleOrNull() ?: 0.0,
+                                        fiber = customFoodFiber.toDoubleOrNull() ?: 0.0,
+                                        sodium = customFoodSodium.toDoubleOrNull() ?: 0.0,
+                                        source = "custom"
+                                    )
+                                )
+
+                                if (saveResponse.isSuccessful) {
+                                    customFoodMessage = "Food saved successfully"
+                                    // Add to results so user can immediately log it
+                                    results = results + FoodItem(
+                                        externalApiId = null,
+                                        name = customFoodName,
+                                        brand = "Custom",
+                                        calories = calories,
+                                        protein = customFoodProtein.toDoubleOrNull() ?: 0.0,
+                                        carbs = customFoodCarbs.toDoubleOrNull() ?: 0.0,
+                                        fat = customFoodFat.toDoubleOrNull() ?: 0.0
+                                    )
+                                    kotlinx.coroutines.delay(800)
+                                    showCustomFoodDialog = false
+                                    // Reset fields
+                                    customFoodName = ""
+                                    customFoodCalories = ""
+                                    customFoodProtein = ""
+                                    customFoodCarbs = ""
+                                    customFoodFat = ""
+                                    customFoodFiber = ""
+                                    customFoodSodium = ""
+                                    customFoodMessage = ""
+                                } else {
+                                    customFoodMessage = "Error: Failed to save food"
+                                }
+                            } catch (e: Exception) {
+                                customFoodMessage = "Error: Could not connect to server"
+                                android.util.Log.e("HomeScreen", "Custom food error: ${e.message}")
+                            } finally {
+                                isSavingCustomFood = false
+                            }
+                        }
+                    },
+                    enabled = !isSavingCustomFood
+                ) {
+                    Text(if (isSavingCustomFood) "Saving..." else "Save Food")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    showCustomFoodDialog = false
+                    customFoodName = ""
+                    customFoodCalories = ""
+                    customFoodProtein = ""
+                    customFoodCarbs = ""
+                    customFoodFat = ""
+                    customFoodFiber = ""
+                    customFoodSodium = ""
+                    customFoodMessage = ""
+                }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
 
         // Date selector row
@@ -648,6 +829,21 @@ fun HomeScreen(
                 }) {
                     Text("Search")
                 }
+            }
+
+            // Add Custom Food button
+            Button(
+                onClick = { showCustomFoodDialog = true },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = Purple40
+                ),
+                border = androidx.compose.foundation.BorderStroke(1.dp, Purple40)
+            ) {
+                Text("+ Add Custom Food")
             }
 
             Spacer(modifier = Modifier.height(8.dp))

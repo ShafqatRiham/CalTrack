@@ -167,3 +167,15 @@ data class SetGoalResponse(
 data class GetGoalResponse(
     val calorie_goal: Int?
 )
+
+data class SaveCustomFoodRequest(
+    val user_id: Int,
+    val name: String,
+    val calories: Double,
+    val protein: Double,
+    val carbs: Double,
+    val fat: Double,
+    val fiber: Double,
+    val sodium: Double,
+    val source: String
+)
