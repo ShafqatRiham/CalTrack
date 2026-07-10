@@ -55,7 +55,7 @@ JWT_SECRET=makethisalongrandomunguessablestring
 PORT=3000
 3. Replace your_actual_mysql_password with the password you set when creating your MySQL connection. If you did not set a password, leave it empty (DB_PASSWORD=)
 4. Open the command terminal in VS Code
-5. In it, install the dependencies by typing "npm install" but make sure your terminal is inside the CalTrack_API folder before running. (You can go to the project folder in file explorer, copy the path, and paste "cd {path}" in the command terminal)
+5. In it, install the dependencies by typing "npm install" but make sure your terminal is inside the CalTrack_API folder before running. (You can go to the project folder in File Explorer, copy the path, and paste "cd {path}" in the command terminal)
 6. You can start the server by typing "node src/app.js"
 
 Running the mobile app in Android Studio
