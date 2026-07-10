@@ -53,7 +53,7 @@ data class LoggedFoodItem(
 )
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(userId: Int) {
     var query by remember { mutableStateOf("") }
     var results by remember { mutableStateOf<List<FoodItem>>(emptyList()) }
     var isLoading by remember { mutableStateOf(false) }
@@ -237,13 +237,13 @@ fun HomeScreen() {
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "Today's Totals",
+                        text = "Today's Calories & Macros",
                         color = Color.White,
                         fontSize = 16.sp
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "${totalCalories.toInt()} kcal",
+                        text = "${totalCalories.toInt()} cals",
                         color = Color.White,
                         fontSize = 22.sp
                     )
