@@ -77,7 +77,7 @@ Running the mobile app in Android Studio
    - Click "Next" then "Finish"
 5. Run the app but make sure the server in VS code is running\
 6. You will be sent to the log in screen to then be able to register or sign in
-7. Note: If http://10.0.2.2:3000/ does not work on your emulator, 
+Note: If http://10.0.2.2:3000/ does not work on your emulator, 
 find your computer's local IP address by running ipconfig in terminal 
 and looking for IPv4 Address under your WiFi adapter. Update BASE_URL 
 in RetrofitClient.kt to http://YOUR_IP:3000/ instead.
