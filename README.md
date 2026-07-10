@@ -40,7 +40,7 @@ Steps for installing MySQL
 6. Go to the SQL tab and enter (CREATE DATABASE ‘database name’)
 7. Once you're in your server, go to server -> data import
 8. Select the import self-contained file and browse to the database file inside the CalTrack_API folder to choose it
-9. On the default target schema, click on caltrack_project_db
+9. On the default target schema, click on new and call it caltrack_project_db
 10. Click "start import"
 11. Wait until the import is completed
 
@@ -48,15 +48,20 @@ Running the API in VS Code
 1. Either in VS Code or File Explorer, create the .env file in the root of Caltrack_API folder
 2. Open the .env file and fill it up with this as a basis 
 DB_HOST=localhost
+
 DB_USER=root
+
 DB_PASSWORD=your_actual_mysql_password
+
 DB_NAME=caltrack_project_db
+
 JWT_SECRET=makethisalongrandomunguessablestring
+
 PORT=3000
-3. Replace your_actual_mysql_password with the password you set when creating your MySQL connection. If you did not set a password, leave it empty (DB_PASSWORD=)
-4. Open the command terminal in VS Code
-5. In it, install the dependencies by typing "npm install" but make sure your terminal is inside the CalTrack_API folder before running. (You can go to the project folder in File Explorer, copy the path, and paste "cd {path}" in the command terminal)
-6. You can start the server by typing "node src/app.js"
+4. Replace your_actual_mysql_password with the password you set when creating your MySQL connection. If you did not set a password, leave it empty (DB_PASSWORD=)
+5. Open the command terminal in VS Code
+6. In it, install the dependencies by typing "npm install" but make sure your terminal is inside the CalTrack_API folder before running. (You can go to the project folder in File Explorer, copy the path, and paste "cd {path}" in the command terminal)
+7. You can start the server by typing "node src/app.js"
 
 Running the mobile app in Android Studio
 1. Go to Android Studio
