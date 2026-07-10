@@ -1,6 +1,14 @@
 CalTrack 
 
-Frontend: Kotlin, Android Studio
+Features
+- Tracking food eaten and calories taken per day
+- Leaderboard system to compare with other users
+- Streaks to encourage users to record and maintain their calories
+- Logging meals with the user-selected time
+- Logging the number of steps for calorie reduction
+- Setting up a calorie goal for the day
+
+Frontend: Kotlin, Android Studio, Composed Functions
 Backend: Node.js, Express, MySQL
 
 Necessary Programs :
@@ -18,7 +26,7 @@ Installations:
 2. Download Node.js from https://nodejs.org/en/download
 3. Download Caltrack and Caltrack_API project through zip from Github 
 4. MySQL - “https://dev.mysql.com/downloads/workbench/”
-5. VS code - https://code.visualstudio.com/download
+5. VS Code - https://code.visualstudio.com/download
 6. Download and install JDK: https://www.oracle.com/jp/java/technologies/downloads/
 7. Download and install Android Studio: https://developer.android.com/studio
 
