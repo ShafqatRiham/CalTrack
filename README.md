@@ -1,6 +1,14 @@
 CalTrack 
 
-Frontend: Kotlin, Android Studio
+Features
+- Tracking food eaten and calories taken per day
+- Leaderboard system to compare with other users
+- Streaks to encourage users to record and maintain their calories
+- Logging meals with the user-selected time
+- Logging the number of steps for calorie reduction
+- Setting up a calorie goal for the day
+
+Frontend: Kotlin, Android Studio, Composed Functions
 Backend: Node.js, Express, MySQL
 
 Necessary Programs :
@@ -18,7 +26,7 @@ Installations:
 2. Download Node.js from https://nodejs.org/en/download
 3. Download Caltrack and Caltrack_API project through zip from Github 
 4. MySQL - “https://dev.mysql.com/downloads/workbench/”
-5. VS code - https://code.visualstudio.com/download
+5. VS Code - https://code.visualstudio.com/download
 6. Download and install JDK: https://www.oracle.com/jp/java/technologies/downloads/
 7. Download and install Android Studio: https://developer.android.com/studio
 
@@ -38,16 +46,17 @@ Steps for installing MySQL
 
 Running the API in VS Code
 1. Either in VS Code or File Explorer, create the .env file in the root of Caltrack_API folder
-2. Open the .env file and fill it up with this as a basis
+2. Open the .env file and fill it up with this as a basis 
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=your_actual_mysql_password
 DB_NAME=caltrack_project_db
 JWT_SECRET=makethisalongrandomunguessablestring
 PORT=3000
-3. Open the command terminal in VS Code
-4. In it, install the dependencies by typing "npm install"
-5. You can start the server by typing "node src/app.js"
+3. Replace your_actual_mysql_password with the password you set when creating your MySQL connection. If you did not set a password, leave it empty (DB_PASSWORD=)
+4. Open the command terminal in VS Code
+5. In it, install the dependencies by typing "npm install" but make sure your terminal is inside the CalTrack_API folder before running. (You can go to the project folder in File Explorer, copy the path, and paste "cd {path}" in the command terminal)
+6. You can start the server by typing "node src/app.js"
 
 Running the mobile app in Android Studio
 1. Go to Android Studio
