@@ -46,7 +46,8 @@ Steps for installing MySQL
 
 Running the API in VS Code
 1. Either in VS Code or File Explorer, create the .env file in the root of Caltrack_API folder
-2. Open the .env file and fill it up with this as a basis 
+2. Open the .env file and fill it up with this as a basis
+
 DB_HOST=localhost
 
 DB_USER=root
